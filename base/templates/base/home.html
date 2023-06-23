@@ -1,0 +1,101 @@
+{% extends 'main.html' %} {% block content %}
+
+<style>
+  .tasks {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .blog_post {
+    background: #fff;
+    max-width: 500px;
+    margin: 1rem;
+    border-radius: 10px;
+    box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+
+  .container_copy {
+    padding: 6rem 4rem 5rem 4rem;
+  }
+
+  h3 {
+    margin: 0 0 0.5rem 0;
+    color: #999;
+    font-size: 1rem;
+  }
+
+  h1 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+    color: #333;
+  }
+
+  p {
+    margin: 0 0 4.5rem 0;
+    font-size: 1.5rem;
+    line-height: 1.45;
+    color: #333;
+  }
+
+  .button {
+    background-color: white;
+    color: black;
+    border: 2px solid #4caf50; 
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 1rem;
+  }
+
+  .button:hover {
+    background-color: #4caf50; 
+    color: white;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: column;
+    justify-content: center;
+    align-items: center;
+    height: 15vh; 
+    margin-top: 2rem;
+  }
+
+  .responsive-heading {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #4caf50;
+  }
+</style>
+
+{% if request.user.is_authenticated %} <!--If user is logged in then show user's tasks--> 
+<div class="tasks">
+  {% for task in tasks %}
+  <div class="blog_post">
+    <div class="container_copy">
+      <h3>Dated: {{task.created}}</h3>
+      <h1>{{task.title}}</h1>
+      <h3>{{task.related_to}}</h3>
+      <p>{{task.description}}</p>
+      <a class="button" href='{% url "update-task" task.id %}'>Update</a>
+      <a class="button" href='{% url "delete-task" task.id %}'>Delete</a>
+    </div>
+  </div>
+  {% endfor%}
+</div>
+
+{% else %} <!--If no user logged in show this--> 
+<div class="container">
+  <div><h1 class="responsive-heading">TO DO Application</h1></div>
+</div>
+
+{% endif %} {% endblock %}
