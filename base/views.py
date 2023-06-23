@@ -26,7 +26,7 @@ def addTask(request):
         form = TaskForm(request.POST) #Instance for Task class with values from submission
     if form.is_valid():
         task = form.save(commit=False) 
-        task.host = request.user #Task added for the logeed in user
+        task.host = request.user #Task added for the logged in user
         task.save()
         return redirect('home')
 
